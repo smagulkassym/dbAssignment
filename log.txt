@@ -1,0 +1,8 @@
+{
+    "name" : "Billy",
+    "surname" : "Herrington" ,
+    "email" : "billyherrington@mail.com",
+    "salary" : 300,
+    "phone" : "+169696969"
+    "cname" : "Japan"
+}
