@@ -1,11 +1,11 @@
 import axios from "axios";
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
 import Table from "react-bootstrap/Table";
-import UserList from "../components/UserList";
+const getUsers = require("../components/UserList");
 
 const NewUser = () => {
   const [users, setUser] = useState([]);
@@ -20,19 +20,40 @@ const NewUser = () => {
   const [phone, setPhone] = useState("");
   const [cname, setCountry] = useState("");
 
-  const createUser = async (name, surname, email, salary, phone, cname) => {
+  const handleSubmit = async (e) => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/users`);
-      setUser(response.data);
-    } catch (error) {
-      console.log(error);
+      console.log(JSON.stringify({
+        name: name,
+        surname: surname,
+        email: email,
+        salary: salary,
+        phone: phone,
+        cname: cname,
+      }))
+      let res = await axios.post(`http://localhost:5000/api/users`, {
+          name: name,
+          surname: surname,
+          email: email,
+          salary: salary,
+          phone: phone,
+          cname: cname,
+      });
+      if (res.status === 200) {
+        console.log("User created successfully");
+      } else {
+        console.log("Some error occured");
+      }
+    } catch (err) {
+      console.log(err);
     }
-    handleClose
+    handleClose();
+    getUsers();
+    window.location.reload();
   };
 
   return (
     <>
-     <Card style={{ margin: "10px" }}>
+      <Card style={{ margin: "10px" }}>
         <Card.Body className=" d-flex justify-content-center align-items-center">
           <div>
             <p>Press the button below to create a New User!</p>
@@ -55,39 +76,59 @@ const NewUser = () => {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Billy" autoFocus />
+              <Form.Control
+                type="text"
+                placeholder="Billy"
+                autoFocus
+                required
+                onChange={(e) => setName(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Surname</Form.Label>
-              <Form.Control type="text" placeholder="Herrington" />
+              <Form.Control
+                type="text"
+                placeholder="Herrington" required
+                onChange={(e) => setSurname(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="billyherrington@niconico.boy "
+                placeholder="billyherrington@niconico.boy " required
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Salary ($)</Form.Label>
-              <Form.Control type="number" min="0" placeholder="300$" />
+              <Form.Control
+                type="number"
+                min="0"
+                placeholder="300$" required
+                onChange={(e) => setSalary(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Phone Number</Form.Label>
-              <Form.Control type="tel" placeholder="870066769" />
+              <Form.Control
+                type="tel"
+                placeholder="870066769" required
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Country</Form.Label>
-              <Form.Select>
+              <Form.Select onChange={(e) => setCountry(e.target.value)} required>
                 <option>Choose country</option>
-                <option value="1">Japan</option>
-                <option value="2">USA</option>
-                <option value="3">China</option>
+                <option value="Japan">Japan</option>
+                <option value="United States">USA</option>
+                <option value="China">China</option>
               </Form.Select>
             </Form.Group>
           </Form>
@@ -96,7 +137,7 @@ const NewUser = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={createUser()}>
+          <Button variant="primary" onClick={handleSubmit}>
             Create
           </Button>
         </Modal.Footer>
