@@ -25,13 +25,13 @@ const UserList = () => {
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/api/users");
+    const response = await axios.get("http://165.22.86.23:5000/api/users");
     setUsers(response.data);
   };
 
   const deleteUser = async (email) => {
     try {
-      await axios.delete(`http://localhost:5000/api/users/${email}`);
+      await axios.delete(`http://165.22.86.23:5000/api/users/${email}`);
       getUsers();
     } catch (error) {
       console.log(error);
@@ -43,7 +43,7 @@ const UserList = () => {
   const showM = async (email) => {
     console.log(email);
     const response = await axios.get(
-      `http://localhost:5000/api/users/${email}`
+      `http://165.22.86.23:5000/api/users/${email}`
     );
     setUser(response.data);
     handleShow();
@@ -61,7 +61,7 @@ const UserList = () => {
           cname: cname,
         })
       )
-      const res = await axios.put(`http://localhost:5000/api/users`, {
+      const res = await axios.put(`http://165.22.86.23:5000/api/users`, {
         name: name,
         surname: surname,
         email: email,

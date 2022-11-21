@@ -19,7 +19,7 @@ const NewUser = () => {
 
   const handleSubmit = async (e) => {
     try {
-      let res = await axios.post(`http://localhost:5000/api/users`, {
+      let res = await axios.post(`http://165.22.86.23:5000/api/users`, {
         name: name,
         surname: surname,
         email: email,
