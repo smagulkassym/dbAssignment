@@ -1,14 +1,11 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
-import Table from "react-bootstrap/Table";
-const getUsers = require("../components/UserList");
 
 const NewUser = () => {
-  const [users, setUser] = useState([]);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -22,21 +19,23 @@ const NewUser = () => {
 
   const handleSubmit = async (e) => {
     try {
-      console.log(JSON.stringify({
-        name: name,
-        surname: surname,
-        email: email,
-        salary: salary,
-        phone: phone,
-        cname: cname,
-      }))
-      let res = await axios.post(`http://localhost:5000/api/users`, {
+      console.log(
+        JSON.stringify({
           name: name,
           surname: surname,
           email: email,
           salary: salary,
           phone: phone,
           cname: cname,
+        })
+      );
+      let res = await axios.post(`http://localhost:5000/api/users`, {
+        name: name,
+        surname: surname,
+        email: email,
+        salary: salary,
+        phone: phone,
+        cname: cname,
       });
       if (res.status === 200) {
         console.log("User created successfully");
@@ -47,7 +46,6 @@ const NewUser = () => {
       console.log(err);
     }
     handleClose();
-    getUsers();
     window.location.reload();
   };
 
@@ -89,7 +87,8 @@ const NewUser = () => {
               <Form.Label>Surname</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Herrington" required
+                placeholder="Herrington"
+                required
                 onChange={(e) => setSurname(e.target.value)}
               />
             </Form.Group>
@@ -98,7 +97,8 @@ const NewUser = () => {
               <Form.Label>Email Address</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="billyherrington@niconico.boy " required
+                placeholder="billyherrington@niconico.boy "
+                required
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
@@ -108,7 +108,8 @@ const NewUser = () => {
               <Form.Control
                 type="number"
                 min="0"
-                placeholder="300$" required
+                placeholder="300$"
+                required
                 onChange={(e) => setSalary(e.target.value)}
               />
             </Form.Group>
@@ -117,14 +118,18 @@ const NewUser = () => {
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
                 type="tel"
-                placeholder="870066769" required
+                placeholder="870066769"
+                required
                 onChange={(e) => setPhone(e.target.value)}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Country</Form.Label>
-              <Form.Select onChange={(e) => setCountry(e.target.value)} required>
+              <Form.Select
+                onChange={(e) => setCountry(e.target.value)}
+                required
+              >
                 <option>Choose country</option>
                 <option value="Japan">Japan</option>
                 <option value="United States">USA</option>
