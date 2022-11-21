@@ -19,16 +19,6 @@ const NewUser = () => {
 
   const handleSubmit = async (e) => {
     try {
-      console.log(
-        JSON.stringify({
-          name: name,
-          surname: surname,
-          email: email,
-          salary: salary,
-          phone: phone,
-          cname: cname,
-        })
-      );
       let res = await axios.post(`http://localhost:5000/api/users`, {
         name: name,
         surname: surname,
@@ -37,11 +27,6 @@ const NewUser = () => {
         phone: phone,
         cname: cname,
       });
-      if (res.status === 200) {
-        console.log("User created successfully");
-      } else {
-        console.log("Some error occured");
-      }
     } catch (err) {
       console.log(err);
     }
