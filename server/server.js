@@ -8,20 +8,11 @@ require('dotenv').config();
 const PORT = process.env.PORT || 5000
 
 const app = express()
-
-app.set('view engine', 'ejs');
-
-const createPath = (page) => path.resolve(__dirname, 'views', `${page}.ejs`);
-
+app.use(cors())
 app.use(express.json())
 app.use('/api', userRouter)
-app.use(cors())
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`))
-
-app.get('/', (req, res) => {
-    res.render(createPath('index'));
-})
 
 app.use((req, res) => {
     const title = 'Error Page';

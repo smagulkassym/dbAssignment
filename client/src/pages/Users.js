@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
 import Table from "react-bootstrap/Table";
+import UserList from "../components/UserList";
 
 const Users = () => {
   const [show, setShow] = useState(false);
@@ -13,6 +14,7 @@ const Users = () => {
 
   return (
     <>
+    < UserList />
       <Card style={{ margin: "10px" }}>
         <Card.Body className=" d-flex justify-content-center align-items-center">
           <div>
@@ -52,7 +54,7 @@ const Users = () => {
                 <td>300$</td>
                 <td>870066769</td>
                 <td>Japan</td>
-                <td class="d-flex justify-content-end "><Button variant="warning" style={{margin: "0.25rem"}}>Edit</Button>
+                <td className="d-flex justify-content-end "><Button variant="warning" style={{margin: "0.25rem"}}>Edit</Button>
                 <Button variant="danger" style={{margin: "0.25rem"}}>Delete</Button></td>
               </tr>
             </tbody>

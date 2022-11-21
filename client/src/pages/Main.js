@@ -1,6 +1,11 @@
 import React from "react";
+import {useState} from 'react';
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
+import axios from "axios";
+// const API = require("../http/userAPI");
+
+// console.log(API.getUsers());
 
 const Main = () => {
   return (
