@@ -1,32 +1,34 @@
 import axios from "axios";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Table from "react-bootstrap/Table";
 
 const UserList = () => {
-    const [users, setUser] = useState([]);
-   
-    useEffect(() => {
+  const [users, setUser] = useState([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    const response = await axios.get("http://localhost:5000/api/users");
+    setUser(response.data);
+  };
+
+  const deleteUser = async (email) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/users/${email}`);
       getUsers();
-    }, []);
-   
-    const getUsers = async () => {
-      const response = await axios.get("http://localhost:5000/api/users");
-      setUser(response.data);
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const deleteUser = async (email) => {
-      try {
-        await axios.delete(`http://localhost:5000/api/users/${email}`);
-        getUsers();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    return (
-      <div className="columns mt-5 ml-5">
-      <div className="column is-half">
-        <table className="table is-striped is-fullwidth">
+  return (
+    <Card style={{ margin: "10px" }} bg={"dark"}>
+      <Card.Body className="d-flex justify-content-center align-items-center">
+        <Table striped hover variant="dark">
           <thead>
             <tr>
               <th>#</th>
@@ -36,11 +38,12 @@ const UserList = () => {
               <th>Salary</th>
               <th>Phone</th>
               <th>Country</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {users.map((user, index) => (
-              <tr key={user.id}>
+              <tr key={index+1}>
                 <td>{index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.surname}</td>
@@ -48,26 +51,28 @@ const UserList = () => {
                 <td>{user.salary}</td>
                 <td>{user.phone}</td>
                 <td>{user.cname}</td>
-                <td>
+                <td className="d-flex justify-content-end ">
                   <Button
                     to={`edit/${user.email}`}
-                    className="button is-small is-info mr-2"
+                    variant="warning"
+                    style={{ margin: "0.25rem" }}
                   >
                     Edit
                   </Button>
-                  <button
+                  <Button
                     onClick={() => deleteUser(user.email)}
-                    className="button is-small is-danger"
+                    variant="danger"
+                    style={{ margin: "0.25rem" }}
                   >
                     Delete
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
-      </div>
-    </div>
-    );
-    };
+        </Table>
+      </Card.Body>
+    </Card>
+  );
+};
 export default UserList;

@@ -23,8 +23,6 @@
           <td>870066769</td>
           <td>Japan</td>
         </tr>
-      </tbody>
-      <tbody>
         {users.map((user, index) => (
           <tr key={user.id}>
             <td>{index + 1}</td>
