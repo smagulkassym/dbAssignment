@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const userRouter = require('./routes/user.routes')
 const path = require('path');
 
@@ -14,6 +15,7 @@ const createPath = (page) => path.resolve(__dirname, 'views', `${page}.ejs`);
 
 app.use(express.json())
 app.use('/api', userRouter)
+app.use(cors())
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`))
 
