@@ -18,7 +18,12 @@ const NewUser = () => {
   const [cname, setCountry] = useState("");
 
   const handleSubmit = async (e) => {
+    if (name == "" || surname == "" || email == "" || salary == "" || phone == "" || cname == ""){
+      return;
+    }
+
     try {
+      console.log(cname + "aaaaa")
       let res = await axios.post(`${process.env.REACT_APP_API_URL}api/users`, {
         name: name,
         surname: surname,
@@ -113,12 +118,13 @@ const NewUser = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3 needs-validation" controlId="exampleForm.ControlInput1">
               <Form.Label>Country</Form.Label>
               <Form.Select
                 onChange={(e) => setCountry(e.target.value)}
                 required
               >
+                <option> Choose Country</option>
                 <option value="Kazakhstan">Kazakhstan</option>
                 <option value="Japan">Japan</option>
                 <option value="United States">USA</option>
