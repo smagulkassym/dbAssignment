@@ -115,7 +115,7 @@ const NewUser = () => {
                 onChange={(e) => setCountry(e.target.value)}
                 required
               >
-                <option>Choose country</option>
+                <option value="Kazakhstan">Kazakhstan</option>
                 <option value="Japan">Japan</option>
                 <option value="United States">USA</option>
                 <option value="China">China</option>
