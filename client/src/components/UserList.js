@@ -144,6 +144,7 @@ const UserList = () => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control
+                maxLength={29}
                 type="text"
                 key={"name" + user.name}
                 defaultValue={user.name}
@@ -156,6 +157,7 @@ const UserList = () => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Surname</Form.Label>
               <Form.Control
+                maxLength={39}
                 type="text"
                 key={"surname" + user.surname}
                 defaultValue={user.surname}
@@ -190,6 +192,7 @@ const UserList = () => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
+                maxLength={19}
                 type="tel"
                 key={"phone" + user.email}
                 defaultValue={user.phone}

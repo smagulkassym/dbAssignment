@@ -60,6 +60,7 @@ const NewUser = () => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
               <Form.Control
+                maxLength={29}
                 type="text"
                 placeholder="Billy"
                 autoFocus
@@ -71,6 +72,7 @@ const NewUser = () => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Surname</Form.Label>
               <Form.Control
+                maxLength={39}
                 type="text"
                 placeholder="Herrington"
                 required
@@ -81,6 +83,7 @@ const NewUser = () => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
+                maxLength={59}
                 type="email"
                 placeholder="billyherrington@niconico.boy "
                 required
@@ -102,6 +105,7 @@ const NewUser = () => {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
+                maxLength={19}
                 type="tel"
                 placeholder="870066769"
                 required
