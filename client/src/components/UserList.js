@@ -9,29 +9,25 @@ import Form from "react-bootstrap/Form";
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState([]);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [showEdit, setShowEdit] = useState(false);
 
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [salary, setSalary] = useState("");
-  const [phone, setPhone] = useState("");
-  const [cname, setCountry] = useState("");
+  const handleCloseEdit = () => setShowEdit(false);
+  const handleShowEdit = () => setShowEdit(true);
 
   useEffect(() => {
     getUsers();
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get("http://165.22.86.23:5000/api/users");
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}api/users`
+    );
     setUsers(response.data);
   };
 
   const deleteUser = async (email) => {
     try {
-      await axios.delete(`http://165.22.86.23:5000/api/users/${email}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}api/users/${email}`);
       getUsers();
     } catch (error) {
       console.log(error);
@@ -43,39 +39,51 @@ const UserList = () => {
   const showM = async (email) => {
     console.log(email);
     const response = await axios.get(
-      `http://165.22.86.23:5000/api/users/${email}`
+      `${process.env.REACT_APP_API_URL}api/users/${email}`
     );
     setUser(response.data);
-    handleShow();
+    handleShowEdit();
   };
 
-  const handleEdit = async (event) => {
+  const handleNameChange = async (e) => {
+    user.name = e.target.value;
+  };
+
+  const handleSurnameChange = async (e) => {
+    user.surname = e.target.value;
+  };
+
+  const handleSalaryChange = async (e) => {
+    user.salary = e.target.value;
+  };
+
+  const handlePhoneChange = async (e) => {
+    user.phone = e.target.value;
+  };
+
+  const handleCountryChange = async (e) => {
+    user.cname = e.target.value;
+  };
+
+  const handleEdit = async () => {
     try {
-      console.log(
-        JSON.stringify({
-          name: name,
-          surname: surname,
-          email: email,
-          salary: salary,
-          phone: phone,
-          cname: cname,
-        })
-      )
-      const res = await axios.put(`http://165.22.86.23:5000/api/users`, {
-        name: name,
-        surname: surname,
-        email: email,
-        salary: salary,
-        phone: phone,
-        cname: cname,
-      }); 
-      console.log(res.data)
+      const res = await axios.put(`${process.env.REACT_APP_API_URL}api/users`, {
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        salary: user.salary,
+        phone: user.phone,
+        cname: user.cname,
+      });
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
-    handleClose();
-    // window.location.reload();
+    handleCloseEdit();
+    getUsers();
   };
+
+  /////////////////////////////////
 
   return (
     <>
@@ -127,7 +135,7 @@ const UserList = () => {
         </Card.Body>
       </Card>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showEdit} onHide={handleCloseEdit}>
         <Modal.Header closeButton>
           <Modal.Title>Edit User</Modal.Title>
         </Modal.Header>
@@ -137,10 +145,11 @@ const UserList = () => {
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
+                key={"name" + user.name}
                 defaultValue={user.name}
                 autoFocus
                 required
-                onChange={(event) => setName(event.target.value)}
+                onChange={handleNameChange}
               />
             </Form.Group>
 
@@ -148,9 +157,10 @@ const UserList = () => {
               <Form.Label>Surname</Form.Label>
               <Form.Control
                 type="text"
+                key={"surname" + user.surname}
                 defaultValue={user.surname}
                 required
-                onChange={(event) => setSurname(event.target.value)}
+                onChange={handleSurnameChange}
               />
             </Form.Group>
 
@@ -158,9 +168,10 @@ const UserList = () => {
               <Form.Label>Email Address</Form.Label>
               <Form.Control
                 type="email"
+                key={"email" + user.email}
                 value={user.email}
                 required
-                onChange={(event) => setEmail(event.target.value)}
+                readOnly
               />
             </Form.Group>
 
@@ -169,9 +180,10 @@ const UserList = () => {
               <Form.Control
                 type="number"
                 min="0"
+                key={"salary" + user.email}
                 defaultValue={user.salary}
                 required
-                onChange={(event) => setSalary(event.target.value)}
+                onChange={handleSalaryChange}
               />
             </Form.Group>
 
@@ -179,9 +191,10 @@ const UserList = () => {
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
                 type="tel"
+                key={"phone" + user.email}
                 defaultValue={user.phone}
                 required
-                onChange={(event) => setPhone(event.target.value)}
+                onChange={handlePhoneChange}
               />
             </Form.Group>
 
@@ -189,10 +202,11 @@ const UserList = () => {
               <Form.Label>Country</Form.Label>
               <Form.Select
                 defaultValue={user.cname}
-                onChange={(event) => setCountry(event.target.value)}
+                key={"country" + user.email}
+                onChange={handleCountryChange}
                 required
               >
-                <option>Choose country</option>
+                <option value="Kazakhstan">Kazakhstan</option>
                 <option value="Japan">Japan</option>
                 <option value="United States">USA</option>
                 <option value="China">China</option>
@@ -201,11 +215,11 @@ const UserList = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleCloseEdit}>
             Close
           </Button>
           <Button variant="primary" onClick={handleEdit}>
-            Create
+            Update
           </Button>
         </Modal.Footer>
       </Modal>

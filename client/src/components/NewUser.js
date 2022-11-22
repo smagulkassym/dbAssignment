@@ -6,9 +6,9 @@ import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
 
 const NewUser = () => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [showUser, setShowUser] = useState(false);
+  const handleCloseUser = () => setShowUser(false);
+  const handleShowUser = () => setShowUser(true);
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -19,7 +19,7 @@ const NewUser = () => {
 
   const handleSubmit = async (e) => {
     try {
-      let res = await axios.post(`http://165.22.86.23:5000/api/users`, {
+      let res = await axios.post(`${process.env.REACT_APP_API_URL}api/users`, {
         name: name,
         surname: surname,
         email: email,
@@ -30,7 +30,7 @@ const NewUser = () => {
     } catch (err) {
       console.log(err);
     }
-    handleClose();
+    handleCloseUser();
     window.location.reload();
   };
 
@@ -42,7 +42,7 @@ const NewUser = () => {
             <p>Press the button below to create a New User!</p>
             <Button
               variant="primary"
-              onClick={handleShow}
+              onClick={handleShowUser}
               style={{ height: "auto", width: "300px" }}
             >
               Add User
@@ -51,7 +51,7 @@ const NewUser = () => {
         </Card.Body>
       </Card>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showUser} onHide={handleCloseUser}>
         <Modal.Header closeButton>
           <Modal.Title>New User</Modal.Title>
         </Modal.Header>
@@ -124,7 +124,7 @@ const NewUser = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleCloseUser}>
             Close
           </Button>
           <Button variant="primary" onClick={handleSubmit}>

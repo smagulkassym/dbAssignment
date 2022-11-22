@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
@@ -8,6 +8,19 @@ import axios from "axios";
 // console.log(API.getUsers());
 
 const Main = () => {
+  const [diseases, setDiseases] = useState([]);
+
+  useEffect(() => {
+    getDiseases();
+  }, []);
+
+  const getDiseases = async () => {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}api/diseases`
+    );
+    setDiseases(response.data);
+  };
+
   return (
     <>
       <h3 className="d-flex justify-content-center" style={{margin:"20px"}}>DBMed Disease Table</h3>
@@ -23,18 +36,14 @@ const Main = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
+              {diseases.map((disease, index) => (
+                <tr key={index + 1}>
+                  <td>{index + 1}</td>
+                  <td>{disease.disease_code}</td>
+                  <td>{disease.pathogen}</td>
+                  <td>{disease.description}</td>
+                </tr>
+              ))}
             </tbody>
           </Table>{" "}
         </Card.Body>
