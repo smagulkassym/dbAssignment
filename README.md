@@ -21,6 +21,7 @@
    - Front-end was on the port 3000
    - Back-end (APIs) on the port 5000
    - Database on port 8080
+
 Currently the server is turned off.
 
 
